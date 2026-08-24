@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html class="dark" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>MG - Architecting Growth Through Code</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;800;900&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet"/>
+    <script>
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "tertiary-container": "#fec931",
+                      "surface-container": "#201f1f",
+                      "on-secondary-fixed-variant": "#2f2ebe",
+                      "on-primary-fixed": "#001f24",
+                      "on-secondary": "#1000a9",
+                      "surface-dim": "#131313",
+                      "on-error-container": "#ffdad6",
+                      "on-surface-variant": "#bac9cc",
+                      "on-tertiary": "#3e2e00",
+                      "background": "#131313",
+                      "surface-bright": "#3a3939",
+                      "surface-container-low": "#1c1b1b",
+                      "growth-green": "#00FF9C",
+                      "surface-container-highest": "#353534",
+                      "surface-variant": "#353534",
+                      "on-error": "#690005",
+                      "on-tertiary-fixed": "#251a00",
+                      "surface-black": "#0D0D0D",
+                      "on-primary": "#00363d",
+                      "inverse-primary": "#006875",
+                      "secondary-container": "#3131c0",
+                      "border-gray": "#262626",
+                      "error": "#ffb4ab",
+                      "primary-container": "#00e5ff",
+                      "on-primary-container": "#00626e",
+                      "on-background": "#e5e2e1",
+                      "inverse-surface": "#e5e2e1",
+                      "deep-indigo": "#0A0B1E",
+                      "primary-fixed": "#9cf0ff",
+                      "surface-container-high": "#2a2a2a",
+                      "primary": "#c3f5ff",
+                      "secondary": "#c0c1ff",
+                      "primary-fixed-dim": "#00daf3",
+                      "inverse-on-surface": "#313030",
+                      "surface-container-lowest": "#0e0e0e",
+                      "outline-variant": "#3b494c",
+                      "surface-tint": "#00daf3",
+                      "surface": "#131313",
+                      "error-container": "#93000a",
+                      "secondary-fixed-dim": "#c0c1ff",
+                      "on-secondary-container": "#b0b2ff",
+                      "secondary-fixed": "#e1e0ff",
+                      "on-tertiary-fixed-variant": "#594400",
+                      "technical-gray": "#1A1A1A",
+                      "tertiary": "#ffeac0",
+                      "tertiary-fixed": "#ffdf96",
+                      "on-secondary-fixed": "#07006c",
+                      "on-primary-fixed-variant": "#004f58",
+                      "outline": "#849396",
+                      "on-tertiary-container": "#6f5500",
+                      "on-surface": "#e5e2e1",
+                      "tertiary-fixed-dim": "#f3bf26"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.125rem",
+                      "lg": "0.25rem",
+                      "xl": "0.5rem",
+                      "full": "0.75rem"
+              },
+              "spacing": {
+                      "gutter": "1.5rem",
+                      "margin-mobile": "1.5rem",
+                      "stack-sm": "0.5rem",
+                      "section-gap": "8rem",
+                      "margin-desktop": "5rem",
+                      "stack-md": "1rem"
+              },
+              "fontFamily": {
+                      "code-sm": ["JetBrains Mono"],
+                      "label-caps": ["JetBrains Mono"],
+                      "display-xl": ["Inter"],
+                      "headline-md": ["Inter"],
+                      "display-xl-mobile": ["Inter"],
+                      "body-lg": ["Inter"],
+                      "body-md": ["Inter"],
+                      "headline-lg": ["Inter"]
+              },
+              "fontSize": {
+                      "code-sm": ["14px", { "lineHeight": "1.5", "fontWeight": "500" }],
+                      "label-caps": ["12px", { "lineHeight": "1.0", "letterSpacing": "0.15em", "fontWeight": "700" }],
+                      "display-xl": ["80px", { "lineHeight": "1.0", "letterSpacing": "-0.05em", "fontWeight": "900" }],
+                      "headline-md": ["24px", { "lineHeight": "1.3", "fontWeight": "700" }],
+                      "display-xl-mobile": ["48px", { "lineHeight": "1.1", "letterSpacing": "-0.03em", "fontWeight": "900" }],
+                      "body-lg": ["18px", { "lineHeight": "1.6", "fontWeight": "400" }],
+                      "body-md": ["16px", { "lineHeight": "1.6", "fontWeight": "400" }],
+                      "headline-lg": ["32px", { "lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "800" }]
+              }
+            },
+          },
+        }
+    </script>
+    <style>
+        body { background-color: #131313; color: #e5e2e1; font-family: 'Inter', sans-serif; }
+        .text-glow { text-shadow: 0 0 10px rgba(0, 218, 243, 0.5); }
+        .box-glow:hover { box-shadow: 0 0 15px rgba(0, 218, 243, 0.3); }
+        .code-grid {
+            background-image: linear-gradient(#262626 1px, transparent 1px), linear-gradient(90deg, #262626 1px, transparent 1px);
+            background-size: 20px 20px;
+            background-position: -1px -1px;
+        }
+        .bg-grid-pattern {
+            background-image: linear-gradient(to right, #262626 1px, transparent 1px), linear-gradient(to bottom, #262626 1px, transparent 1px);
+            background-size: 40px 40px;
+        }
+        .syntax-keyword { color: #c0c1ff; }
+        .syntax-string { color: #00FF9C; }
+        .syntax-function { color: #00daf3; }
+        .syntax-comment { color: #849396; }
+        .glow-primary { box-shadow: 0 0 20px -5px rgba(0, 218, 243, 0.3); }
+    </style>
+</head>
+<body class="bg-surface font-body-md text-body-md antialiased selection:bg-primary-fixed-dim selection:text-surface-black overflow-x-hidden min-h-screen">
+    <div id="root"></div>
+
+    <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/history@5/umd/history.development.js"></script>
+    <script src="https://unpkg.com/react-router@6.3.0/umd/react-router.development.js"></script>
+    <script src="https://unpkg.com/react-router-dom@6.3.0/umd/react-router-dom.development.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+
+    <script type="text/babel">
+        const { useState, useEffect } = React;
+        const { createRoot } = ReactDOM;
+        const { MemoryRouter, Routes, Route, Link, useNavigate, useLocation } = ReactRouterDOM;
+
+        const Navbar = () => {
+            const navigate = useNavigate();
+            const location = useLocation();
+            const path = location.pathname;
+
+            const navLinks = [
+                { name: 'Stack', path: '/stack' },
+                { name: 'Services', path: '/services' },
+                { name: 'Case Studies', path: '/case-studies' },
+                { name: 'Network', path: '/' }
+            ];
+
+            return (
+                <nav className="fixed top-0 w-full z-50 bg-surface/80 backdrop-blur-xl dark:bg-surface-black/80 border-b border-border-gray">
+                    <div className="flex justify-between items-center px-4 md:px-margin-desktop h-20 max-w-7xl mx-auto">
+                        <Link to="/" className="flex items-center gap-stack-sm">
+                            <img alt="MG Logo" className="h-10 w-auto invert" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAN-lg4LNFE_DEy2RqOlKlbwvEYAYfpIYJFx4n6Rvvvid4lKsSkqhs5tsG4IJLxofNd79GzGHCkE2NyxjgphJ0wiKAzJM3qiPcqgXqfiE9f0yQa3dNFFSXGCNoXWelLMWfOCV_KDyWFZY7syrvD5jLEI50RdI-UD2iOjydbroMrkX5q9OO8Hf8TMJU9mclnmjUHuIgR2J9LaBdycnwn_97-43Vvx30PlfEZ_uu_WF0sQcNGl9xUV3XPqaFHhm1c_g"/>
+                            <span className="font-display-xl text-headline-md tracking-tighter text-on-surface">MG</span>
+                        </Link>
+                        <div className="hidden md:flex gap-4 lg:gap-stack-md font-label-caps text-label-caps">
+                            {navLinks.map(link => (
+                                <Link 
+                                    key={link.path}
+                                    to={link.path} 
+                                    className={`px-3 py-2 rounded-DEFAULT transition-all duration-300 ${path === link.path ? 'text-primary-fixed-dim border-b-2 border-primary-fixed-dim' : 'text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high'}`}
+                                >
+                                    {link.name}
+                                </Link>
+                            ))}
+                        </div>
+                        <button className="bg-primary-fixed-dim text-surface-black font-label-caps text-label-caps px-6 py-3 rounded-none hover:bg-primary transition-colors scale-95 active:scale-90">
+                            Hire Me
+                        </button>
+                    </div>
+                </nav>
+            );
+        };
+
+        const Footer = () => (
+            <footer className="bg-surface-black border-t border-border-gray w-full py-stack-md mt-auto">
+                <div className="flex flex-col md:flex-row justify-between items-center px-4 md:px-margin-desktop py-12 gap-stack-md max-w-7xl mx-auto w-full">
+                    <div className="font-display-xl text-headline-md text-on-surface flex items-center gap-2">
+                        <img alt="MG Logo Small" className="h-6 w-auto invert" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD2-Ie7dtsnc_5DQCSOlOTgP7dggp2CBjDbtXJmTXDpgKAfTtCmZSvxEx1lJsZdKWgXipOEixItSJFTFbL3J1eph6YAfBqqXkxST4hKYNq-V9F5A05HdyRqOopqz9oYHZM_-GYrSun9THS2LKncKI-VboHnAdHDLhfe74-ZV9De1aPtpscrX_5KmtVT7KwEnmd0oY3uOopQ-YFWpk5l8zXaBj04Ln1CWEAwX7IadKmWx3pwip4-SCdchiQHU2rfgg"/>
+                        MG
+                    </div>
+                    <div className="font-code-sm text-code-sm text-primary-fixed-dim text-center md:text-left uppercase">
+                        © 2024 MG • SONKOUE MIGUEL • ARCHITECTING GROWTH
+                    </div>
+                    <div className="flex flex-wrap justify-center gap-6 font-code-sm text-code-sm">
+                        <a className="text-on-surface-variant hover:text-growth-green transition-colors opacity-80 hover:opacity-100" href="#">GitHub</a>
+                        <a className="text-on-surface-variant hover:text-growth-green transition-colors opacity-80 hover:opacity-100" href="#">LinkedIn</a>
+                        <a className="text-on-surface-variant hover:text-growth-green transition-colors opacity-80 hover:opacity-100" href="#">Twitter</a>
+                    </div>
+                </div>
+            </footer>
+        );
+
+        const HomePage = () => {
+            const navigate = useNavigate();
+            return (
+                <main className="flex-grow pt-32 pb-section-gap max-w-7xl mx-auto px-4 md:px-margin-desktop w-full flex flex-col gap-section-gap">
+                    <section className="flex flex-col md:flex-row items-center gap-margin-desktop pt-16">
+                        <div className="flex-1 flex flex-col gap-stack-md">
+                            <div className="inline-flex items-center gap-2 border border-border-gray px-3 py-1 bg-technical-gray w-fit mb-4">
+                                <span className="material-symbols-outlined text-growth-green text-[16px]">terminal</span>
+                                <span className="font-code-sm text-code-sm text-on-surface-variant">System.init()</span>
+                            </div>
+                            <h1 className="font-display-xl-mobile md:font-display-xl text-display-xl-mobile md:text-display-xl text-on-surface">
+                                Architecting Growth <br/><span className="text-primary-fixed-dim text-glow">Through Code.</span>
+                            </h1>
+                            <p className="font-body-lg text-body-lg text-on-surface-variant max-w-2xl border-l border-primary-fixed-dim pl-4 mt-4">
+                                Sonkoue Miguel (MG) — High-performance growth systems for ambitious enterprises. Bridging the gap between engineering and marketing.
+                            </p>
+                            <div className="flex gap-4 mt-8">
+                                <button onClick={() => navigate('/services')} className="bg-primary-fixed-dim text-surface-black font-label-caps text-label-caps px-8 py-4 rounded-none hover:bg-primary transition-colors flex items-center gap-2">
+                                    Initialize Project <span className="material-symbols-outlined text-[16px]">arrow_forward</span>
+                                </button>
+                                <button onClick={() => navigate('/stack')} className="border border-border-gray text-on-surface font-label-caps text-label-caps px-8 py-4 rounded-none hover:bg-technical-gray transition-colors">
+                                    View Stack
+                                </button>
+                            </div>
+                        </div>
+                        <div className="flex-1 relative w-full aspect-square md:aspect-auto md:h-[600px] border border-border-gray bg-technical-gray p-4 flex items-center justify-center overflow-hidden">
+                            <div className="absolute inset-0 opacity-10" style={{backgroundImage: "url('https://lh3.googleusercontent.com/aida-public/AB6AXuCSYaaxBBv89JPKkESqKhneclxzWVGvVz5YMGELSXXLzU7SlZ6NmBpDXsDK3R1rAjm0SHxLyIxokCtlAgDP54Ib4WmT6W0NTkCjmA_SKFVOgsncHiUYZTa_RtyNnTLXcsZTBT4i6-ILpNPMW0EPnTcuQljRvclZX970uBDr2nu_aL8RwwZRM1lT9nUPrKE25xoGqLE4ue1s7SHgYuPCDObi6RD7g3NvK9jZSqhJy2mbmR182c4QOjprU7vheswPkg')", backgroundSize: 'cover', backgroundPosition: 'center'}}></div>
+                            <div className="relative z-10 w-full max-w-sm border border-primary-fixed-dim bg-surface-black p-6 shadow-[0_0_30px_rgba(0,218,243,0.1)]">
+                                <div className="flex justify-between items-center mb-6 pb-2 border-b border-border-gray">
+                                    <span className="font-code-sm text-code-sm text-primary-fixed-dim">Status: ACTIVE</span>
+                                    <div className="flex gap-1">
+                                        <div className="w-2 h-2 bg-border-gray rounded-full"></div>
+                                        <div className="w-2 h-2 bg-border-gray rounded-full"></div>
+                                        <div className="w-2 h-2 bg-growth-green rounded-full shadow-[0_0_8px_#00FF9C]"></div>
+                                    </div>
+                                </div>
+                                <div className="space-y-4 font-code-sm text-code-sm text-on-surface-variant">
+                                    <p>&gt; Loading growth modules...</p>
+                                    <p>&gt; Analyzing current metrics...</p>
+                                    <p className="text-growth-green">&gt; Optimization detected: +142% ROI</p>
+                                    <div className="h-1 w-full bg-border-gray mt-4">
+                                        <div className="h-full bg-primary-fixed-dim w-[85%] animate-pulse"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <section className="border-t border-b border-border-gray py-12 flex flex-col items-center gap-8 bg-surface-black/50">
+                        <h3 className="font-label-caps text-label-caps text-on-surface-variant">Trusted by Forward-Thinking Enterprises</h3>
+                        <img alt="Trusted Client Logos" className="w-full max-w-4xl opacity-70 grayscale hover:grayscale-0 hover:opacity-100 transition-all duration-500" src="https://lh3.googleusercontent.com/aida/AEtjO1VGf9CC62cYW17kr17BDLRqAE_8uG3vdoYXGTKtijGDokSLDuHCHulb5JobTQvFSRLX1zy3MN2LzDTZBkGS0Dw_gg6Xyw8yfOcTZeHaZV9k8i0gsUIRfFtPxS8Exb58LU8EcowzhQ37jbc2yjgx4n9RXrIg5ADk5AgHKFezDPAy8jPUsqbqswjmt4zN3IDRQg2wA5E6H44Xim8Q01v6UcnN0L4XMjm0nDB0Vru8Mr0YVnLDgQzARA"/>
+                    </section>
+                </main>
+            );
+        };
+
+        const ServicesPage = () => {
+            const navigate = useNavigate();
+            return (
+                <main className="pt-32 pb-section-gap max-w-7xl mx-auto px-4 md:px-margin-desktop">
+                    <header className="mb-section-gap">
+                        <h1 className="font-display-xl-mobile md:font-display-xl text-display-xl-mobile md:text-display-xl mb-stack-md text-transparent bg-clip-text bg-gradient-to-r from-on-surface to-on-surface-variant">
+                            Tunnels de Vente Stratégiques
+                        </h1>
+                        <p className="font-body-lg text-body-lg text-on-surface-variant max-w-3xl">
+                            Ingénierie de pipelines d'acquisition haute vélocité. Intégrations personnalisées via Google Scripts et API Meta Pixel pour des conversions automatisées et mesurables.
+                        </p>
+                    </header>
+
+                    <section className="mb-section-gap">
+                        <h2 className="font-headline-lg text-headline-lg mb-stack-md border-l-4 border-primary-fixed-dim pl-4">Architecture Pipeline</h2>
+                        <div className="bg-technical-gray border border-border-gray p-8 relative overflow-hidden bg-grid-pattern group">
+                            <div className="absolute inset-0 opacity-10 font-display-xl text-[200px] leading-none pointer-events-none z-0 text-on-surface font-black flex items-center justify-center">MG</div>
+                            <div className="relative z-10 grid grid-cols-1 md:grid-cols-4 gap-6">
+                                <div className="bg-surface-black border border-border-gray p-6 flex flex-col items-center text-center hover:border-primary-fixed-dim transition-colors">
+                                    <span className="material-symbols-outlined text-4xl text-growth-green mb-4">filter_alt</span>
+                                    <h3 className="font-label-caps text-label-caps mb-2 text-primary-fixed-dim">1. Acquisition</h3>
+                                    <p className="font-code-sm text-code-sm text-on-surface-variant">Trafic ciblé via Meta/Google Ads.</p>
+                                </div>
+                                <div className="hidden md:flex items-center justify-center">
+                                    <span className="material-symbols-outlined text-border-gray">arrow_forward</span>
+                                </div>
+                                <div className="bg-surface-black border border-border-gray p-6 flex flex-col items-center text-center hover:border-primary-fixed-dim transition-colors">
+                                    <span className="material-symbols-outlined text-4xl text-primary-fixed-dim mb-4">dataset</span>
+                                    <h3 className="font-label-caps text-label-caps mb-2 text-primary-fixed-dim">2. Data Capture</h3>
+                                    <p className="font-code-sm text-code-sm text-on-surface-variant">Scripts Google & API Pixel.</p>
+                                </div>
+                                <div className="hidden md:flex items-center justify-center">
+                                    <span className="material-symbols-outlined text-border-gray">arrow_forward</span>
+                                </div>
+                                <div className="bg-surface-black border border-border-gray p-6 flex flex-col items-center text-center hover:border-primary-fixed-dim transition-colors relative">
+                                    <div className="absolute -top-2 -right-2 w-4 h-4 bg-growth-green rounded-full animate-pulse"></div>
+                                    <span className="material-symbols-outlined text-4xl text-growth-green mb-4">trending_up</span>
+                                    <h3 className="font-label-caps text-label-caps mb-2 text-primary-fixed-dim">3. Conversion</h3>
+                                    <p className="font-code-sm text-code-sm text-on-surface-variant">Automatisation CRM & Nurturing.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <section className="mb-section-gap grid grid-cols-1 md:grid-cols-2 gap-8">
+                        <div className="bg-surface-container border border-border-gray p-8">
+                            <h3 className="font-headline-md text-headline-md mb-4 flex items-center gap-2">
+                                <span className="material-symbols-outlined text-primary-fixed-dim">code</span>
+                                Google Scripts Custom
+                            </h3>
+                            <p className="font-body-md text-body-md text-on-surface-variant mb-6">
+                                Développement de scripts sur-mesure pour synchroniser les données entre vos formulaires, feuilles de calcul et CRM en temps réel. Élimination des tâches manuelles.
+                            </p>
+                            <div className="bg-surface-black p-4 font-code-sm text-code-sm text-primary-fixed border border-border-gray rounded-sm relative overflow-x-auto">
+                                <pre><code>{`function syncLeadToCRM(data) {
+  const endpoint = "api/v1/leads";
+  const payload = JSON.stringify(data);
+  return UrlFetchApp.fetch(endpoint, options);
+}`}</code></pre>
+                            </div>
+                        </div>
+                        <div className="bg-surface-container border border-border-gray p-8 border-t-4 border-t-primary-fixed-dim">
+                            <h3 className="font-headline-md text-headline-md mb-4 flex items-center gap-2">
+                                <span className="material-symbols-outlined text-growth-green">insights</span>
+                                Meta Pixel API
+                            </h3>
+                            <p className="font-body-md text-body-md text-on-surface-variant mb-6">
+                                Implémentation avancée de l'API de conversions Meta côté serveur pour un tracking robuste, contournant les restrictions des navigateurs (iOS 14+).
+                            </p>
+                            <div className="flex gap-2 flex-wrap">
+                                <span className="font-code-sm text-code-sm bg-technical-gray px-3 py-1 border-l-2 border-primary-fixed-dim text-on-surface">Server-Side Tracking</span>
+                                <span className="font-code-sm text-code-sm bg-technical-gray px-3 py-1 border-l-2 border-primary-fixed-dim text-on-surface">Event Deduplication</span>
+                            </div>
+                        </div>
+                    </section>
+
+                    <section className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        <div className="bg-surface-black border border-border-gray p-8 flex flex-col">
+                            <h3 className="font-headline-md text-headline-md mb-2">Setup Base</h3>
+                            <div className="text-4xl font-bold font-code-sm text-on-surface mb-6">1 500€</div>
+                            <ul className="space-y-3 mb-8 flex-1">
+                                <li className="flex items-start gap-2 font-body-md text-body-md text-on-surface-variant">
+                                    <span className="material-symbols-outlined text-growth-green text-sm mt-1">check</span> Configuration Pixel Standard
+                                </li>
+                                <li className="flex items-start gap-2 font-body-md text-body-md text-on-surface-variant">
+                                    <span className="material-symbols-outlined text-growth-green text-sm mt-1">check</span> 1 Tunnel (Opt-in simple)
+                                </li>
+                            </ul>
+                            <button className="w-full bg-transparent border border-secondary-container text-on-surface py-3 font-label-caps text-label-caps uppercase hover:bg-surface-container-high transition-colors">Select</button>
+                        </div>
+                        <div className="bg-technical-gray border border-primary-fixed-dim p-8 flex flex-col relative transform md:-translate-y-4 shadow-[0_10px_30px_rgba(0,218,243,0.1)]">
+                            <div className="absolute top-0 left-0 w-full bg-primary-fixed-dim text-surface-black text-center py-1 font-label-caps text-label-caps uppercase">Recommandé</div>
+                            <h3 className="font-headline-md text-headline-md mb-2 mt-4">Pipeline Pro</h3>
+                            <div className="text-4xl font-bold font-code-sm text-primary-fixed-dim mb-6">3 500€</div>
+                            <ul className="space-y-3 mb-8 flex-1">
+                                <li className="flex items-start gap-2 font-body-md text-body-md text-on-surface-variant">
+                                    <span className="material-symbols-outlined text-growth-green text-sm mt-1">check</span> API Meta Conversions (CAPI)
+                                </li>
+                                <li className="flex items-start gap-2 font-body-md text-body-md text-on-surface-variant">
+                                    <span className="material-symbols-outlined text-growth-green text-sm mt-1">check</span> Scripts Google Custom
+                                </li>
+                            </ul>
+                            <button className="w-full bg-primary-container text-on-primary-fixed py-3 font-label-caps text-label-caps uppercase transition-shadow">Select</button>
+                        </div>
+                        <div className="bg-surface-black border border-border-gray p-8 flex flex-col">
+                            <h3 className="font-headline-md text-headline-md mb-2">Enterprise</h3>
+                            <div className="text-4xl font-bold font-code-sm text-on-surface mb-6">Sur Devis</div>
+                            <ul className="space-y-3 mb-8 flex-1">
+                                <li className="flex items-start gap-2 font-body-md text-body-md text-on-surface-variant">
+                                    <span className="material-symbols-outlined text-growth-green text-sm mt-1">check</span> Architecture Multi-Tunnels
+                                </li>
+                                <li className="flex items-start gap-2 font-body-md text-body-md text-on-surface-variant">
+                                    <span className="material-symbols-outlined text-growth-green text-sm mt-1">check</span> Intégration ERP/CRM Complexe
+                                </li>
+                            </ul>
+                            <button className="w-full bg-transparent border border-secondary-container text-on-surface py-3 font-label-caps text-label-caps uppercase hover:bg-surface-container-high transition-colors">Contact</button>
+                        </div>
+                    </section>
+                </main>
+            );
+        };
+
+        const StackPage = () => (
+            <main className="pt-32 pb-section-gap px-4 md:px-margin-desktop max-w-7xl mx-auto space-y-section-gap">
+                <header className="space-y-stack-md pt-12">
+                    <p className="font-code-sm text-code-sm text-primary-fixed-dim uppercase tracking-widest flex items-center gap-2">
+                        <span className="w-8 h-[1px] bg-primary-fixed-dim block"></span>
+                        System Overview
+                    </p>
+                    <h1 className="font-display-xl-mobile md:font-display-xl text-display-xl-mobile md:text-display-xl text-on-surface max-w-4xl">
+                        Architecture & Intégrations
+                    </h1>
+                    <p className="font-body-lg text-body-lg text-on-surface-variant max-w-2xl mt-6 border-l-2 border-border-gray pl-4">
+                        Orchestrating scalable microservices, relational data structures, and automated workflows to engineer high-velocity growth.
+                    </p>
+                </header>
+
+                <section className="grid grid-cols-1 md:grid-cols-12 gap-6 auto-rows-min">
+                    <div className="md:col-span-8 bg-technical-gray border border-border-gray p-8 relative overflow-hidden group hover:border-primary-fixed-dim transition-colors duration-500">
+                        <div className="absolute inset-0 grid-bg opacity-20 pointer-events-none"></div>
+                        <div className="flex justify-between items-start mb-12 relative z-10">
+                            <div>
+                                <h3 className="font-headline-lg text-headline-lg text-on-surface mb-2">Node.js Engine</h3>
+                                <p className="font-body-md text-body-md text-on-surface-variant">Asynchronous event-driven core.</p>
+                            </div>
+                            <span className="material-symbols-outlined text-4xl text-primary-fixed-dim opacity-50">data_object</span>
+                        </div>
+                        <div className="bg-surface-black border border-border-gray rounded-sm overflow-hidden relative z-10">
+                            <div className="flex items-center px-4 py-2 border-b border-border-gray bg-surface-container-low gap-2">
+                                <div className="w-3 h-3 rounded-full bg-error"></div>
+                                <div className="w-3 h-3 rounded-full bg-tertiary-container"></div>
+                                <div className="w-3 h-3 rounded-full bg-growth-green"></div>
+                                <span className="ml-4 font-code-sm text-[10px] text-on-surface-variant opacity-50">server.ts</span>
+                            </div>
+                            <div className="p-6 font-code-sm text-code-sm text-on-surface-variant overflow-x-auto">
+                                <pre><code>{`import { serve } from '@hono/node-server';
+const app = new Hono();
+app.get('/api/health', (c) => {
+  return c.json({ status: 'operational' });
+});`}</code></pre>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="md:col-span-4 bg-technical-gray border border-border-gray p-8 relative flex flex-col justify-between group hover:border-primary-fixed-dim transition-colors duration-500">
+                        <div>
+                            <div className="w-12 h-12 bg-surface-black border border-border-gray flex items-center justify-center mb-6">
+                                <span className="material-symbols-outlined text-secondary">forum</span>
+                            </div>
+                            <h3 className="font-headline-md text-headline-md text-on-surface mb-2">Meta API</h3>
+                            <p className="font-body-md text-body-md text-on-surface-variant mb-6">Conversational commerce integrations. Webhooks and real-time messaging sync.</p>
+                        </div>
+                        <div className="bg-surface-black border border-border-gray p-4">
+                            <div className="flex justify-between items-center mb-2">
+                                <span className="font-code-sm text-code-sm text-on-surface-variant">Webhook Status</span>
+                                <span className="font-code-sm text-code-sm text-growth-green">200 OK</span>
+                            </div>
+                            <div className="h-1 w-full bg-surface-container overflow-hidden">
+                                <div className="h-full bg-secondary w-[85%]"></div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section className="border-t border-border-gray pt-16">
+                    <h2 className="font-headline-lg text-headline-lg text-on-surface mb-8">System Telemetry</h2>
+                    <div className="grid grid-cols-1 md:grid-cols-4 gap-px bg-border-gray border border-border-gray">
+                        <div className="bg-surface-black p-6 flex flex-col">
+                            <span className="font-code-sm text-code-sm text-on-surface-variant uppercase mb-4">Uptime</span>
+                            <span className="font-code-sm text-display-xl-mobile text-on-surface">99.9%</span>
+                        </div>
+                        <div className="bg-surface-black p-6 flex flex-col">
+                            <span className="font-code-sm text-code-sm text-on-surface-variant uppercase mb-4">Avg Latency</span>
+                            <span className="font-code-sm text-display-xl-mobile text-on-surface">42<span className="text-headline-md text-on-surface-variant">ms</span></span>
+                        </div>
+                        <div className="bg-surface-black p-6 flex flex-col">
+                            <span className="font-code-sm text-code-sm text-on-surface-variant uppercase mb-4">Req/Sec</span>
+                            <span className="font-code-sm text-display-xl-mobile text-on-surface">1.2k</span>
+                        </div>
+                        <div className="bg-surface-black p-6 flex flex-col justify-center items-center">
+                            <div className="w-32 h-32 rounded-full border-4 border-surface-container flex items-center justify-center relative">
+                                <div className="text-center">
+                                    <span className="block font-code-sm text-headline-md text-primary-fixed-dim">80%</span>
+                                    <span className="block font-code-sm text-[10px] text-on-surface-variant">CPU Load</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </main>
+        );
+
+        const CaseStudiesPage = () => (
+            <main className="flex-grow pt-32 pb-section-gap px-4 md:px-margin-desktop max-w-7xl mx-auto">
+                <section className="mb-section-gap">
+                    <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+                        <div className="lg:col-span-7 space-y-6">
+                            <h1 className="font-display-xl-mobile md:font-display-xl text-display-xl-mobile md:text-display-xl text-on-surface">
+                                Expertise & <br/><span className="text-primary-fixed-dim">Réalisations</span>
+                            </h1>
+                            <p className="font-body-lg text-body-lg text-on-surface-variant max-w-2xl">
+                                Architecting scalable growth systems through data engineering and full-stack implementation.
+                            </p>
+                            <div className="pt-4 flex gap-4">
+                                <button className="bg-primary-fixed-dim text-surface-black font-label-caps text-label-caps px-8 py-4 rounded-none hover:shadow-[0_0_20px_#00daf3]">
+                                    Start Your Audit
+                                </button>
+                            </div>
+                        </div>
+                        <div className="lg:col-span-5 relative h-96 w-full border border-border-gray overflow-hidden">
+                            <img className="w-full h-full object-cover opacity-80 mix-blend-luminosity grayscale hover:grayscale-0 transition-all duration-500" src="https://lh3.googleusercontent.com/aida/AEtjO1UyBoGofkwgucgWFzrjEq4sjDRSzJrgIzHXaSkwA0hIHyW29qNidtViOqsqgjxCj4nnoU5OWqmsBhqQiR9cZ9BrTG9FLC8fNWjqOrLXQPC1nLMN9CmVqYAR0EZR20TrMEELROrirWq5bZzm6LxB2tJ8Q1YkGiG8ACR232WeENOdkoyoGvGqNYUQEwPhJvORFlzxBp1cM1sFqahdNPzg_KKBhSJkVyY0gXpFXFQ6RCnW5i4JFrW_YA"/>
+                            <div className="absolute inset-0 bg-gradient-to-t from-surface-black to-transparent"></div>
+                            <div className="absolute bottom-4 left-4">
+                                <span className="font-code-sm text-code-sm text-primary-fixed-dim bg-technical-gray px-3 py-1 border-l border-primary-fixed-dim">PROJECT_ALPHA_OVERVIEW</span>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section className="mb-section-gap">
+                    <div className="mb-12 border-b border-border-gray pb-4">
+                        <h2 className="font-headline-lg text-headline-lg text-on-surface"><span className="text-primary-fixed-dim">01 //</span> The Technical Process</h2>
+                    </div>
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                        {[
+                            { title: 'Audit', icon: 'analytics', phase: 'PHASE_1' },
+                            { title: 'Architecture', icon: 'account_tree', phase: 'PHASE_2' },
+                            { title: 'Implementation', icon: 'terminal', phase: 'PHASE_3' },
+                            { title: 'Optimization', icon: 'speed', phase: 'PHASE_4' }
+                        ].map((item, idx) => (
+                            <div key={idx} className="bg-technical-gray border border-border-gray p-6 flex flex-col gap-4 group hover:border-primary-fixed-dim transition-colors duration-300">
+                                <div className="flex justify-between items-start">
+                                    <span className="material-symbols-outlined text-3xl text-on-surface-variant group-hover:text-primary-fixed-dim">{item.icon}</span>
+                                    <span className="font-code-sm text-code-sm text-on-surface-variant">{item.phase}</span>
+                                </div>
+                                <h3 className="font-headline-md text-headline-md text-on-surface mt-auto">{item.title}</h3>
+                            </div>
+                        ))}
+                    </div>
+                </section>
+
+                <section>
+                    <div className="bg-surface-container-low border border-border-gray overflow-hidden">
+                        <div className="grid grid-cols-1 lg:grid-cols-2">
+                            <div className="p-8 lg:p-12 border-b lg:border-b-0 lg:border-r border-border-gray">
+                                <h2 className="font-headline-lg text-headline-lg text-on-surface mb-8">Case Study: <br/><span className="text-primary-fixed-dim">Project Alpha</span></h2>
+                                <div className="space-y-8">
+                                    <div>
+                                        <p className="font-label-caps text-label-caps text-on-surface-variant mb-2">ROI (12 MONTHS)</p>
+                                        <span className="font-display-xl-mobile text-display-xl-mobile text-on-surface font-code-sm">342%</span>
+                                    </div>
+                                    <div>
+                                        <p className="font-label-caps text-label-caps text-on-surface-variant mb-2">DATA INGESTION (PEAK)</p>
+                                        <span className="font-headline-lg text-headline-lg text-on-surface font-code-sm">1.2M req/sec</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="relative min-h-[400px] code-grid p-8 bg-surface-black flex items-center justify-center">
+                                <div className="w-full max-w-md bg-technical-gray border border-border-gray shadow-2xl relative z-10">
+                                    <div className="p-4 font-code-sm text-code-sm text-on-surface-variant">
+                                        <pre><code>{`import { StreamProcessor } from '@mg/core';
+const pipeline = new StreamProcessor({
+  workers: 128,
+  batchSize: 5000
+});
+pipeline.start();`}</code></pre>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </main>
+        );
+
+        const App = () => {
+            return (
+                <MemoryRouter>
+                    <div className="min-h-screen flex flex-col bg-surface overflow-x-hidden">
+                        <Navbar />
+                        <Routes>
+                            <Route path="/" element={<HomePage />} />
+                            <Route path="/services" element={<ServicesPage />} />
+                            <Route path="/stack" element={<StackPage />} />
+                            <Route path="/case-studies" element={<CaseStudiesPage />} />
+                        </Routes>
+                        <Footer />
+                    </div>
+                </MemoryRouter>
+            );
+        };
+
+        const container = document.getElementById('root');
+        const root = createRoot(container);
+        root.render(<App />);
+    </script>
+</body>
+</html>
