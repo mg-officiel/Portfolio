@@ -1,21 +1,35 @@
 import React, { useState } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 
 const Navbar = () => {
   const location = useLocation();
+  const navigate = useNavigate();
   const path = location.pathname;
   const [isOpen, setIsOpen] = useState(false);
 
   const navLinks = [
-    { name: 'STACK', path: '/stack' },
-    { name: 'SERVICES', path: '/services' },
-    { name: 'CASE STUDIES', path: '/case-studies' },
-    { name: 'NETWORK', path: '/' }
+    { name: 'SERVICES', path: '/services', sectionId: 'services-section' },
+    { name: 'RÉSULTATS', path: '/case-studies', sectionId: 'cases-section' },
+    { name: 'STACK', path: '/stack', sectionId: 'stack-section' },
+    { name: 'SIMULATEUR', path: '/', sectionId: 'simulator-section' }
   ];
 
+  const handleNavClick = (link) => {
+    setIsOpen(false);
+    if (path === '/' || path === '') {
+      const element = document.getElementById(link.sectionId);
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth' });
+        return;
+      }
+    }
+    navigate(link.path);
+  };
+
   const handleContactClick = () => {
-    if (window.location.hash !== '#/') {
-      window.location.href = '#/';
+    setIsOpen(false);
+    if (path !== '/') {
+      navigate('/');
       setTimeout(() => {
         const element = document.getElementById('contact-form-section');
         if (element) element.scrollIntoView({ behavior: 'smooth' });
@@ -27,7 +41,7 @@ const Navbar = () => {
   };
 
   return (
-    <nav className="fixed top-0 w-full z-50 bg-[#0b0f19]/80 backdrop-blur-md border-b border-b-border-gray">
+    <nav className="fixed top-0 w-full z-50 bg-[#0b0f19]/85 backdrop-blur-md border-b border-b-border-gray">
       <div className="flex justify-between items-center px-6 md:px-margin-desktop h-20 max-w-7xl mx-auto">
         <Link to="/" className="flex items-center gap-2.5" onClick={() => setIsOpen(false)}>
           <img
@@ -41,17 +55,17 @@ const Navbar = () => {
         {/* Desktop Links */}
         <div className="hidden md:flex gap-8 font-label-caps text-[12px] tracking-widest font-semibold">
           {navLinks.map(link => (
-            <Link
-              key={link.path}
-              to={link.path}
-              className={`transition-all duration-200 py-1 border-b-2 ${
+            <button
+              key={link.name}
+              onClick={() => handleNavClick(link)}
+              className={`transition-all duration-200 py-1 border-b-2 uppercase ${
                 path === link.path
                   ? 'text-primary-fixed-dim border-primary-fixed-dim'
                   : 'text-on-surface-variant border-transparent hover:text-on-surface'
               }`}
             >
               {link.name}
-            </Link>
+            </button>
           ))}
         </div>
 
@@ -59,9 +73,9 @@ const Navbar = () => {
         <div className="hidden md:flex items-center gap-4">
           <button
             onClick={handleContactClick}
-            className="bg-primary hover:bg-blue-600 text-white font-label-caps text-[12px] font-bold px-6 py-2.5 rounded transition-all uppercase tracking-wider shadow-sm"
+            className="bg-primary hover:bg-blue-600 text-white font-label-caps text-[12px] font-bold px-6 py-2.5 rounded-xl transition-all uppercase tracking-wider shadow-md"
           >
-            Contact Me
+            Démarrer Un Projet
           </button>
         </div>
 
@@ -85,28 +99,24 @@ const Navbar = () => {
       {isOpen && (
         <div className="fixed top-[84px] right-6 w-72 max-h-[calc(100vh-100px)] bg-[#0b0f19]/95 backdrop-blur-lg z-40 flex flex-col gap-3 p-5 rounded-2xl border border-border-gray shadow-2xl overflow-y-auto md:hidden">
           {navLinks.map(link => (
-            <Link
-              key={link.path}
-              to={link.path}
-              onClick={() => setIsOpen(false)}
-              className={`font-label-caps text-[13px] font-semibold tracking-widest px-4 py-3 rounded-xl transition-all ${
+            <button
+              key={link.name}
+              onClick={() => handleNavClick(link)}
+              className={`font-label-caps text-[13px] font-semibold tracking-widest px-4 py-3 rounded-xl transition-all text-left uppercase ${
                 path === link.path
                   ? 'text-primary bg-primary/10'
                   : 'text-on-surface-variant hover:text-on-surface hover:bg-white/5'
               }`}
             >
               {link.name}
-            </Link>
+            </button>
           ))}
           <div className="h-[1px] bg-border-gray my-1" />
           <button
-            onClick={() => {
-              setIsOpen(false);
-              handleContactClick();
-            }}
+            onClick={handleContactClick}
             className="bg-primary hover:bg-blue-600 text-white font-label-caps text-[12px] font-bold py-3.5 rounded-xl transition-all uppercase tracking-wider shadow-sm w-full text-center"
           >
-            Contact Me
+            Démarrer Un Projet
           </button>
         </div>
       )}
